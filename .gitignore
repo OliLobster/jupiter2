@@ -9,3 +9,8 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+.DS_Store
+jupiter2/.DS_Store
+jupiter2/src/.DS_Store
+jupiter2/src/main/.DS_Store
+jupiter2/src/main/java/.DS_Store
