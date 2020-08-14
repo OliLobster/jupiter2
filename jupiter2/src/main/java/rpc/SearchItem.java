@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 /**
  * Servlet implementation class SearchItem
@@ -32,12 +33,11 @@ public class SearchItem extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("application/json");
 		PrintWriter writer = response.getWriter();
-		if (request.getParameter("username") != null) {
-			JSONObject obj = new JSONObject();
-			String username = request.getParameter("username");
-			obj.put("username", username);
-			writer.print(obj);
-		}
+
+		JSONArray array = new JSONArray();
+		array.put(new JSONObject().put("username", "abcd"));
+		array.put(new JSONObject().put("username", "1234"));
+		writer.print(array);
 	}
 
 	/**
