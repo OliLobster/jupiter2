@@ -31,13 +31,12 @@ public class SearchItem extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("application/json");
-		PrintWriter writer = response.getWriter();
 
 		JSONArray array = new JSONArray();
 		array.put(new JSONObject().put("username", "abcd"));
 		array.put(new JSONObject().put("username", "1234"));
-		writer.print(array);
+		RpcHelper.writeJsonArray(response, array);
+		
 	}
 
 	/**
