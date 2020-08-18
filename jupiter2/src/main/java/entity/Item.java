@@ -3,6 +3,7 @@ package entity;
 import java.util.Set;
 
 public class Item {
+	
 	private String itemId;
 	private String name;
 	private String address;
@@ -35,6 +36,7 @@ public class Item {
 	}
 
 	public static class ItemBuilder {
+		
 		private String itemId;
 		private String name;
 		private String address;
@@ -64,6 +66,10 @@ public class Item {
 
 		public void setKeywords(Set<String> keywords) {
 			this.keywords = keywords;
+		}
+		
+		public Item build() {
+			return new Item(this);
 		}
 
 	}
