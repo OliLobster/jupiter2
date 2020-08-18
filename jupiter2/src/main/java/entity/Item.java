@@ -3,13 +3,22 @@ package entity;
 import java.util.Set;
 
 public class Item {
-	
+
 	private String itemId;
 	private String name;
 	private String address;
 	private Set<String> keywords;
 	private String imageUrl;
 	private String url;
+
+	private Item(ItemBuilder builder) {
+		this.itemId = builder.itemId;
+		this.name = builder.name;
+		this.address = builder.address;
+		this.imageUrl = builder.imageUrl;
+		this.url = builder.url;
+		this.keywords = builder.keywords;
+	}
 
 	public String getItemId() {
 		return itemId;
@@ -36,7 +45,7 @@ public class Item {
 	}
 
 	public static class ItemBuilder {
-		
+
 		private String itemId;
 		private String name;
 		private String address;
@@ -67,7 +76,7 @@ public class Item {
 		public void setKeywords(Set<String> keywords) {
 			this.keywords = keywords;
 		}
-		
+
 		public Item build() {
 			return new Item(this);
 		}
