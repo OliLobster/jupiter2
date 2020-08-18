@@ -23,7 +23,7 @@ public class GitHubClient {
 	private static final String URL_TEMPLATE = "https://jobs.github.com/positions.json?description=%s&lat=%s&long=%s";
 	private static final String DEFAULT_KEYWORD = "developer";
 
-	public JSONArray search(double lat, double lon, String keyword) {
+	public List<Item> search(double lat, double lon, String keyword) {
 		if (keyword == null) {
 			keyword = DEFAULT_KEYWORD;
 		}
@@ -37,31 +37,33 @@ public class GitHubClient {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 
 		// Create a custom response handler
-		ResponseHandler<JSONArray> responseHandler = new ResponseHandler<JSONArray>() {
+		ResponseHandler<List<Item>> responseHandler = new ResponseHandler<List<Item>>() {
 
-			@Override
-			public JSONArray handleResponse(final HttpResponse response) throws IOException {
-				if (response.getStatusLine().getStatusCode() != 200) {
-					return new JSONArray();
-				}
-				HttpEntity entity = response.getEntity();
-				if (entity == null) {
-					return new JSONArray();
-				}
-				String responseBody = EntityUtils.toString(entity);
-				return new JSONArray(responseBody);
-			}
-		};
-
+	        @Override
+	        public List<Item> handleResponse(
+	                final HttpResponse response) throws IOException {
+	            if (response.getStatusLine().getStatusCode() != 200) {
+	            	return new ArrayList<>();
+	            }
+	            HttpEntity entity = response.getEntity();
+	            if (entity == null) {
+	            	return new ArrayList<>();
+	            }
+	            String responseBody = EntityUtils.toString(entity);
+	            JSONArray array = new JSONArray(responseBody);
+	            return getItemList(array);
+	        }
+	    };
+	    
 		try {
-			return httpclient.execute(new HttpGet(url), responseHandler);
+			return httpclient.execute( new HttpGet(url), responseHandler);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return new JSONArray();
+		return new ArrayList<>();
 	}
 	
 	private List<Item> getItemList(JSONArray array) {
